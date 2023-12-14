@@ -148,6 +148,18 @@ html {
     }
 }
 
+#resize-popup {
+    display: none;
+    position: absolute;
+    top: 20vh;
+    margin: 1vw;
+    padding: 10px;
+    border-radius: 1rem;
+    background-color: #424242;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
 .flex-container {
     display: flex;
     justify-content: center;

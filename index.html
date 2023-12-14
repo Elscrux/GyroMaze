@@ -78,6 +78,17 @@
         </div>
         <span class="settings-icon" onclick="toggleSettingsPopup()">&#9881</span>
     </div>
+
+    <div id="resize-popup">
+        Your screen size has changed, do you want to restart this level to adjust the size of the maze?
+        <div id="resize-popup-buttons">
+            <button id="resize-popup-yes" onclick="{
+                closeResizePopup();
+                initializeMatter();
+            }">Yes</button>
+            <button id="resize-popup-no" onclick="closeResizePopup()">No</button>
+        </div>
+    </div>
 </div>
 
 <canvas class="canvas" id="game-canvas"></canvas>

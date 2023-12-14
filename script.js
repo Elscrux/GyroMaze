@@ -11,11 +11,16 @@ let difficultySlider = document.getElementById("difficulty-slider");
 let generationSpeedSlider = document.getElementById("generation-speed-slider");
 let generationSpeedCheckbox = document.getElementById("generation-speed-checkbox");
 let randomColorsCheckbox = document.getElementById("random-colors-checkbox");
+let settingsPopup = document.getElementById("settings-popup");
+let resizePopup = document.getElementById("resize-popup");
 let engine = null;
 let score = 0;
 
 let mazeBuildDelay = 0;
 let updateWallTimeouts = [];
+
+let width = getCanvasSizeX();
+let height = getCanvasSizeY();
 
 // Load the Matter.js script
 const script = document.createElement("script");
@@ -35,7 +40,6 @@ window.onload = () => {
 
 // Init settings popup
 document.addEventListener("click", function (event) {
-    const settingsPopup = document.getElementById("settings-popup");
     if (!settingsPopup.contains(event.target) && event.target.className !== "settings-icon") {
         settingsPopup.style.display = "none";
     }
@@ -43,13 +47,38 @@ document.addEventListener("click", function (event) {
 
 addEventListener("resize", onResize);
 
+// give the option to restart the level when the screen is resized
 function onResize() {
-    // Reset whole game when the screen is resized
-    initializeMatter();
+    if (getCanvasSizeX() === width
+        && getCanvasSizeY() === height) {
+        closeResizePopup();
+    } else {
+        showResizePopup();
+    }
+}
+
+function showResizePopup() {
+    resizePopup.style.display = "block";
+}
+
+function closeResizePopup() {
+    resizePopup.style.display = "none";
+}
+
+function getCanvasSizeX() {
+    return document.documentElement.clientWidth;
+}
+
+function getCanvasSizeY() {
+    return document.documentElement.clientHeight - topBar.clientHeight;
+}
+
+function updateCanvasSize() {
+    width = getCanvasSizeX();
+    height = getCanvasSizeY();
 }
 
 function toggleSettingsPopup() {
-    const settingsPopup = document.getElementById("settings-popup");
     settingsPopup.style.display = (settingsPopup.style.display === "block") ? "none" : "block";
 }
 
@@ -155,8 +184,7 @@ function initializeMatter() {
     engine.gravity.x = 0;
     engine.gravity.y = 0;
 
-    let width = document.documentElement.clientWidth;
-    let height = document.documentElement.clientHeight - topBar.clientHeight;
+    updateCanvasSize();
 
     let doubleWidth = width * 2;
     let doubleHeight = height * 2;
