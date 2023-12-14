@@ -306,6 +306,8 @@ function initializeMatter() {
 
     // add walls to the maze by adding rectangles to the world
     async function generateMaze() {
+        let colorSeed = Math.random();
+
         log(`Grid size: ${gridSizeX} x ${gridSizeY}`);
 
         for (const updateWallTimeout of updateWallTimeouts) {
@@ -436,7 +438,7 @@ function initializeMatter() {
                         maze.push(Bodies.rectangle(x * length + length / 2, (y + 1) * length, length + wallSize, wallSize, {
                             isStatic: true,
                             render: {
-                                fillStyle: getWallColor()
+                                fillStyle: getWallColor(x, y)
                             }
                         }));
                     }
@@ -444,7 +446,7 @@ function initializeMatter() {
                         maze.push(Bodies.rectangle((x + 1) * length, y * length + length / 2, wallSize, length + wallSize, {
                             isStatic: true,
                             render: {
-                                fillStyle: getWallColor()
+                                fillStyle: getWallColor(x, y)
                             }
                         }));
                     }
@@ -455,9 +457,9 @@ function initializeMatter() {
             Composite.add(wallsComposite, maze);
             return maze;
 
-            function getWallColor() {
+            function getWallColor(x, y) {
                 if (randomColorsCheckbox.checked) {
-                    return getRandomColor();
+                    return getRandomColor(colorSeed, x, y);
                 } else {
                     return "#ffffff";
                 }
@@ -572,12 +574,16 @@ function enableJoystick() {
 }
 
 // get a random color
-function getRandomColor() {
+function getRandomColor(seed, x, y) {
     const letters = "0123456789ABCDEF";
     let color = "#";
 
     for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+        // Random number using a seed and x and y coordinates to have a deterministic number
+        let random = Math.sin(seed + x * 12.9898 + y * 78.233) * 43758.5453 * (i + 1);
+        random = random - Math.floor(random);
+        color += letters[Math.floor(random * 16)];
+        console.log(Math.floor(random * 16));
     }
 
     return color;
