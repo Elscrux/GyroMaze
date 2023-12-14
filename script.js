@@ -478,9 +478,12 @@ function initializeMatter() {
 function updateBall(direction) {
     if (engine == null) return;
 
+    const minSensitivity = 0.01;
+    const maxSensitivity = 0.5;
+
     // x needs to be inverted for some reason
-    engine.gravity.x = direction.x * sensitivitySlider.value;
-    engine.gravity.y = direction.y * sensitivitySlider.value;
+    engine.gravity.x = direction.x * map01(sensitivitySlider.value, minSensitivity, maxSensitivity);
+    engine.gravity.y = direction.y * map01(sensitivitySlider.value, minSensitivity, maxSensitivity);
     log(`X: ${engine.gravity.x.toFixed(2)} Y: ${engine.gravity.y.toFixed(2)}`);
 }
 
@@ -599,6 +602,16 @@ function getRandomColor(seed, x, y) {
 // log a message to the debug div
 function log(message) {
     debugDiv.innerHTML = message;
+}
+
+// map a value from one range to another
+function map(value, min1, max1, min2, max2) {
+    return (value - min1) * (max2 - min2) / (max1 - min1) + min2;
+}
+
+// map from a range between 0 and 1
+function map01(value, min, max) {
+    return map(value, 0, 1, min, max);
 }
 
 // shuffle items in an array
