@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div id="top-bar">
+    <div class="debug" id="debug"></div>
+
+    <div id="score-container">
+        Score:
+        <span id="score">
+                0
+            </span>
+    </div>
+
+    <div id="settings-popup-container">
+        <div id="settings-popup">
+            <table>
+                <tr>
+                    <td>
+                        <label for="sensitivity-slider">
+                            Input Sensitivity:
+                        </label>
+                    </td>
+                    <td>
+                        <input id="sensitivity-slider" type="range" step="0.01" min="0.1" max="2.5" value="1">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="difficulty-slider">
+                            Maze Size:
+                        </label>
+                    </td>
+                    <td>
+                        <input id="difficulty-slider" type="range" min="5" max="25" value="12">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="generation-speed-checkbox">
+                            Step by Step Generation:
+                        </label>
+                    </td>
+                    <td>
+                        <input id="generation-speed-checkbox" type="checkbox">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Generation Speed:
+                    </td>
+                    <td>
+                        <div class="generation-speed">
+                            <label for="generation-speed-slider"></label>
+                            <input id="generation-speed-slider" type="range" step="0.01" min="0" max="1"
+                                   value="0.1">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="random-colors-checkbox">
+                            Random Wall Colors
+                        </label>
+                    </td>
+                    <td>
+                        <input id="random-colors-checkbox" type="checkbox">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <span class="settings-icon" onclick="toggleSettingsPopup()">&#9881</span>
+    </div>
+</div>
+
+<canvas class="canvas" id="game-canvas"></canvas>
+
+<div id="joystick">
+    <div id="handle"></div>
+</div>
+
+<div id="start-popup" class="popup">
+        <span id="start-popup-text">
+            Gyro Maze
+        </span>
+</div>
+
+<div id="solved-popup" class="popup initially-hidden">
+        <span id="solved-popup-text">
+            +1
+        </span>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+body,
+html {
+    /* full size canvas */
+    margin: 0;
+    font-family: Calibri;
+    overflow: hidden;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #4e54c8, #8f94fb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-in-out;
+}
+
+#start-popup-text {
+    /* Gradient for the text */
+    background: linear-gradient(to right,
+    rgb(185, 185, 185),
+    rgb(204, 186, 24),
+    rgb(185, 185, 185),
+    rgb(204, 186, 24));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 5rem;
+    font-weight: bold;
+    background-size: 400% 100%;
+    animation: statupTextGradientAnimation 3s linear infinite;
+}
+
+@keyframes statupTextGradientAnimation {
+    0% {
+        background-position: 0% 100%;
+    }
+
+    100% {
+        background-position: 100% 0%;
+    }
+}
+
+#joystick {
+    width: 8rem;
+    height: 8rem;
+    background-color: #555;
+    border-radius: 50%;
+    position: relative;
+    opacity: 0.8;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    visibility: collapse;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#handle {
+    width: 4rem;
+    height: 4rem;
+    background-color: #333;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(50%, 50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#debug {
+    position: absolute;
+    color: white;
+    top: 0;
+    left: 0;
+    padding: 0.1rem;
+}
+
+#top-bar {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: rgb(42, 42, 42);
+}
+
+#game-canvas {
+    border: 1px solid #000;
+}
+
+#solved-popup-text {
+    /* Gradient for the text */
+    background: linear-gradient(to right,
+    rgb(185, 185, 185),
+    rgb(204, 186, 24),
+    rgb(185, 185, 185),
+    rgb(204, 186, 24));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 5rem;
+    font-family: Calibri;
+    size: 20rem;
+    font-weight: bold;
+    animation: solvedTextGradientAnimation 2s ease-in-out infinite;
+}
+
+@keyframes solvedTextGradientAnimation {
+    0% {
+        transform: scale(4);
+    }
+
+    100% {
+        transform: scale(8);
+    }
+}
+
+#settings-popup-container {
+    position: absolute;
+    right: 0.25rem;
+}
+
+#settings-popup {
+    display: none;
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+    width: 25rem;
+    font-size: 1.25rem;
+    padding: 10px;
+    border-radius: 1rem;
+    background-color: #424242;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hideIfEmpty:empty {
+    display: none;
+}
+
+.initially-hidden {
+    visibility: collapse;
+}
