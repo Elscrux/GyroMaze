@@ -127,13 +127,25 @@ html {
     position: absolute;
     top: 2rem;
     right: 1rem;
-    width: 25rem;
-    font-size: 1.25rem;
     padding: 10px;
     border-radius: 1rem;
     background-color: #424242;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 2;
+}
+
+@media only screen and (min-width: 1000px) {
+    #settings-popup {
+        width: 25rem;
+        font-size: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    #settings-popup {
+        width: 95vw;
+        font-size: 4rem;
+    }
 }
 
 .flex-container {
