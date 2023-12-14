@@ -4,6 +4,7 @@ let canvas = document.getElementById("game-canvas");
 let scoreSpan = document.getElementById("score");
 let startPopup = document.getElementById("start-popup");
 let solvedPopup = document.getElementById("solved-popup");
+let solvedPopupText = document.getElementById("solved-popup-text");
 let topBar = document.getElementById("top-bar");
 let sensitivitySlider = document.getElementById("sensitivity-slider");
 let difficultySlider = document.getElementById("difficulty-slider");
@@ -261,15 +262,16 @@ function initializeMatter() {
 
         isIncreasingLevel = true;
 
+        solvedPopupText.innerHTML = "+" + difficultySlider.value;
+        score += parseInt(difficultySlider.value);
+        scoreSpan.innerHTML = score;
+
         solvedPopup.style.visibility = "visible";
         setTimeout(() => {
             // Move the ball to a random starting point
             addBall(getRandomStartPoint());
             solvedPopup.style.visibility = "collapse";
         }, 1000);
-
-        score++;
-        scoreSpan.innerHTML = score;
 
         generateMaze();
 
