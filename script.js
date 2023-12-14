@@ -40,6 +40,13 @@ document.addEventListener("click", function (event) {
     }
 });
 
+addEventListener("resize", onResize);
+
+function onResize() {
+    // Reset whole game when the screen is resized
+    initializeMatter();
+}
+
 function toggleSettingsPopup() {
     const settingsPopup = document.getElementById("settings-popup");
     settingsPopup.style.display = (settingsPopup.style.display === "block") ? "none" : "block";
