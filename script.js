@@ -55,37 +55,37 @@ function toggleSettingsPopup() {
 
 // initialize gravity sensor or joystick
 function initInput() {
+    // Enable joystick in any case so there is an input method when the sensor is not working
+    // but disable joystick again when there is any input from the sensor
+    enableJoystick();
+
+    // The requestPermission function is not supported in all browsers
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+        // When the request can be made, request permission to use the sensor
+        // and subscribe to it if permission is granted
+        DeviceMotionEvent.requestPermission()
+            .then(response => {
+                if (response === "granted") {
+                    subscribeToGyro();
+                }
+            })
+            .catch(console.error);
+    } else {
+        // If the requestPermission function is not supported, try to subscribe to the sensor
+        subscribeToGyro();
+    }
+
+    return;
+
     let permissions = [{
         name: "accelerometer",
         onSuccess: () => {
             let gravitySensorSettings = { frequency: 60 };
             let gravitySensor = new GravitySensor(gravitySensorSettings);
 
-            // Enable joystick anyway in case the sensor is not working
-            // but disable joystick again when there is any input from the sensor
-            enableJoystick();
-            gravitySensor.addEventListener("reading", (e) => {
-                disableJoystick();
 
-                // x needs to be inverted for some reason
-                if (window.screen.orientation.angle % 180 === 0) {
-                    updateBall({
-                        x: -e.target.x,
-                        y: e.target.y
-                    });
-                } else {
-                    if (window.screen.orientation.angle === 90) {
-                        updateBall({
-                            x: e.target.y,
-                            y: e.target.x
-                        });
-                    } else {
-                        updateBall({
-                            x: -e.target.y,
-                            y: -e.target.x
-                        });
-                    }
-                }
+            gravitySensor.addEventListener("reading", (e) => {
+                onOrientationChanged(e.target.x, e.target.y);
             });
 
             gravitySensor.start();
@@ -96,6 +96,46 @@ function initInput() {
     }];
 
     requestPermission(permissions);
+
+    function subscribeToGyro() {
+        window.addEventListener(
+            "deviceorientation",
+            (e) => {
+                const leftToRight = e.gamma; // gamma: left to right
+                const frontToBack = e.beta; // beta: front back motion
+
+                onOrientationChanged(leftToRight, frontToBack);
+            },
+            true,
+        );
+    }
+
+    function onOrientationChanged(x, y) {
+        // Disable joystick when orientation sensor is working
+        disableJoystick();
+
+        // x needs to be inverted for some reason
+        if (window.screen.orientation.angle % 180 === 0) {
+            updateBall({
+                x: x,
+                y: y
+            });
+        } else {
+            // landscape-primary
+            if (window.screen.orientation.angle === 90) {
+                updateBall({
+                    x: y,
+                    y: -x
+                });
+                // landscape-secondary
+            } else {
+                updateBall({
+                    x: -y,
+                    y: x
+                });
+            }
+        }
+    };
 }
 
 // Initialize canvas and the physics engine
