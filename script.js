@@ -276,6 +276,9 @@ function initializeMatter() {
         // Move the destination to a random end point
         addDestination(getRandomEndPoint());
 
+        // Reset ball position
+        addBall(getRandomStartPoint());
+
         isIncreasingLevel = false;
     }
 
